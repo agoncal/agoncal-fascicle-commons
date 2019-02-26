@@ -1,9 +1,7 @@
-package org.agoncal.fascicle.jpa.advanced;
+package org.agoncal.fascicle.commons.junit;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  * @author Antonio Goncalves
@@ -11,31 +9,35 @@ import javax.persistence.Id;
  * --
  */
 // tag::adocSnippet[]
-@Entity
 public class Customer {
 
-  @Id
-  @GeneratedValue
   private Long id;
-  @Column(name = "first_name", nullable = false, length = 50)
   private String firstName;
-  @Column(name = "last_name", nullable = false, length = 50)
   private String lastName;
   private String email;
-  @Column(name = "phone_number", length = 15)
   private String phoneNumber;
+  private LocalDate dateOfBirth;
+  private Integer age;
 
   // Constructors, getters, setters
+
+  public void calculateAge() {
+    if (dateOfBirth == null) {
+      age = null;
+      return;
+    }
+
+    age = Period.between(dateOfBirth, LocalDate.now()).getYears();
+  }
   // tag::adocSkip[]
 
   public Customer() {
   }
 
-  public Customer(String firstName, String lastName, String email, String phoneNumber) {
+  public Customer(String firstName, String lastName, String email) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
-    this.phoneNumber = phoneNumber;
   }
 
   // ======================================
@@ -80,6 +82,26 @@ public class Customer {
 
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
+  }
+
+  public LocalDate getDateOfBirth() {
+    return dateOfBirth;
+  }
+
+  public void setDateOfBirth(LocalDate dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+  }
+
+  public Integer getAge() {
+    return age;
+  }
+
+  public void setAge(Integer age) {
+    this.age = age;
+  }
+
+  public void clear() {
+    this.id = null;
   }
   // end::adocSkip[]
 }
