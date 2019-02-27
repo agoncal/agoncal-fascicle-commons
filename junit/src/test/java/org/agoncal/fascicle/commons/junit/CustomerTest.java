@@ -20,12 +20,14 @@ public class CustomerTest {
   private Customer customer = new Customer();
 
 // end::adocClass[]
+
 // tag::adocFixture[]
   @BeforeEach
   public void clearCustomer() {
     customer.clear();
   }
 // end::adocFixture[]
+
 // tag::ageShouldBeGreaterThanZero[]
   @Test
   public void ageShouldBeGreaterThanZero() {
@@ -47,7 +49,8 @@ public class CustomerTest {
       customer.calculateAge();
     });
   }
-// end::shouldRaiseConstraintViolationCauseNullTitle[]
+// end::shouldThrowAnExceptionCauseDateOfBirtheIsNull[]
+
 // tag::shouldCalculateOldAge[]
   @Test
   @Disabled("Test is not ready yet")
