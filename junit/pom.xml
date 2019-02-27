@@ -15,7 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
-
+  <!-- tag::adocSnippet[] -->
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -31,10 +31,13 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.1</version>
+        <!-- tag::adocSkip[] -->
         <configuration>
           <argLine>-Duser.language=en -Duser.country=EN</argLine>
         </configuration>
+        <!-- end::adocSkip[] -->
       </plugin>
     </plugins>
   </build>
+  <!-- end::adocSnippet[] -->
 </project>
