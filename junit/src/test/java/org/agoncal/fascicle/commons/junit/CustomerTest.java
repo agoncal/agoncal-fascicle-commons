@@ -14,17 +14,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * http://www.antoniogoncalves.org
  * --
  */
+// tag::adocClass[]
 public class CustomerTest {
 
   private Customer customer = new Customer();
 
+// end::adocClass[]
+// tag::adocFixture[]
   @BeforeEach
   public void clearCustomer() {
     customer.clear();
   }
-
+// end::adocFixture[]
+// tag::ageShouldBeGreaterThanZero[]
   @Test
-  public void ageShouldBeGretaterThanZero() {
+  public void ageShouldBeGreaterThanZero() {
     customer = new Customer("Rita", "Navalhas", "rnavalhas@gmail.com");
     customer.setDateOfBirth(LocalDate.of(1975, 5, 27));
 
@@ -32,35 +36,23 @@ public class CustomerTest {
 
     assertTrue(customer.getAge() >= 0);
   }
+// end::ageShouldBeGreaterThanZero[]
 
-//  @Test
-//  public void ageShouldBe42() {
-//    int expectedAge = 42;
-//    Calendar birth = new GregorianCalendar();
-//    birth.roll(Calendar.YEAR, expectedAge * (-1));
-//    birth.roll(Calendar.DAY_OF_YEAR, -1);
-//
-//    customer = new Customer("Rita", "Navalhas", "rnavalhas@gmail.com");
-//    customer.setDateOfBirth(birth.getTime());
-//
-//    customer.calculateAge();
-//    assertEquals(new Long(expectedAge), new Long(customer.getAge()));
-//  }
-
+// tag::shouldThrowAnExceptionCauseDateOfBirtheIsNull[]
   @Test
   public void shouldThrowAnExceptionCauseDateOfBirtheIsNull() {
 
-    // tag::shouldThrowAnExceptionCauseDateOfBirtheIsNull[]
     customer = null;
     assertThrows(NullPointerException.class, () -> {
       customer.calculateAge();
     });
-    // end::shouldRaiseConstraintViolationCauseNullTitle[]
   }
-
+// end::shouldRaiseConstraintViolationCauseNullTitle[]
+// tag::shouldCalculateOldAge[]
   @Test
   @Disabled("Test is not ready yet")
   public void shouldCalculateOldAge() {
     // some work to do
   }
+// end::shouldCalculateOldAge[]
 }

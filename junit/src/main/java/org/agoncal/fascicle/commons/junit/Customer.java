@@ -29,6 +29,10 @@ public class Customer {
 
     age = Period.between(dateOfBirth, LocalDate.now()).getYears();
   }
+
+  public void clear() {
+    this.dateOfBirth = null;
+  }
   // tag::adocSkip[]
 
   public Customer() {
@@ -98,10 +102,6 @@ public class Customer {
 
   public void setAge(Integer age) {
     this.age = age;
-  }
-
-  public void clear() {
-    this.id = null;
   }
   // end::adocSkip[]
 }
