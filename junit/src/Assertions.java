@@ -1,4 +1,5 @@
 // @formatter:off
+// tag::adocSnippet[]
 public class Assertions {
 
   void assertTrue(boolean condition) { }
@@ -28,3 +29,4 @@ public class Assertions {
 
   <T extends Throwable> T assertThrows(Class<T> expectedType, Executable executable) { }
 }
+// end::adocSnippet[]
