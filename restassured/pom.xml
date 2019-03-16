@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.agoncal.fascicle.commons</groupId>
+  <artifactId>restassured</artifactId>
+  <version>1.0</version>
+  <name>Commons :: REST Assured</name>
+
+  <properties>
+    <!-- JAX-RS -->
+    <version.jersey>2.28</version.jersey>
+    <version.java>1.8</version.java>
+    <maven.compiler.source>${version.java}</maven.compiler.source>
+    <maven.compiler.target>${version.java}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- JAX-RS -->
+      <dependency>
+        <groupId>org.glassfish.jersey</groupId>
+        <artifactId>jersey-bom</artifactId>
+        <version>${version.jersey}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- tag::adocSnippet[] -->
+  <dependencies>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-grizzly2-http</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.3.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.1</version>
+        <!-- tag::adocSkip[] -->
+        <configuration>
+          <argLine>-Duser.language=en -Duser.country=EN</argLine>
+        </configuration>
+        <!-- end::adocSkip[] -->
+      </plugin>
+    </plugins>
+  </build>
+  <!-- end::adocSnippet[] -->
+</project>
