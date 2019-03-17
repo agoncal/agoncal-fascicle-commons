@@ -1,11 +1,18 @@
 package org.agoncal.fascicle.commons.restassured;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * @author Antonio Goncalves
@@ -16,37 +23,52 @@ import java.util.List;
 @Path("/customers")
 public class CustomerResource {
 
-  @GET
-  @Path("search/{text}")
-  public List<Customer> searchCustomers(@PathParam("text") String textToSearch) {
-    // URI : /customers/search/smith
-    // tag::adocskip1[]
-    System.out.println("searchCustomer : " + textToSearch);
-    Customers customers = new Customers();
-    customers.add(new Customer("John", "Smith", "jsmith@gmail.com", "1234565", LocalDate.now(), LocalDateTime.now()));
-    customers.add(new Customer("John", "Smith", "jsmith@gmail.com", "1234565", LocalDate.now(), LocalDateTime.now()));
-    return customers;
-    // end::adocskip1[]
+  private static Customers customers = new Customers();
+
+  static {
+    customers.addAll(Arrays.asList(
+      new Customer(UUID.randomUUID(), "John", "Lennon"),
+      new Customer(UUID.randomUUID(), "Paul", "McCartney"),
+      new Customer(UUID.randomUUID(), "George", "Harrison"),
+      new Customer(UUID.randomUUID(), "Ringo", "Starr")
+    ));
+  }
+
+  @POST
+  public Response createArtist(@Context UriInfo uriInfo, Customer customer) {
+    customer.setId(UUID.randomUUID());
+    customers.add(customer);
+    URI uri = uriInfo.getAbsolutePathBuilder().path(customer.getId().toString()).build();
+    return Response.created(uri).build();
   }
 
   @GET
-  @Path("{login: [a-zA-Z]*}")
-  public Customer getCustomerByLogin(@PathParam("login") String login) {
-    // URI : /customers/foobarsmith
-    // tag::adocskip2[]
-    System.out.println("getCustomerByLogin : " + login);
-    return new Customer("John", "Smith", "jsmith@gmail.com", "1234565", LocalDate.now(), LocalDateTime.now());
-    // end::adocskip2[]
+  public Response getAllCustomers() {
+    return Response.ok(customers).build();
   }
 
   @GET
-  @Path("{customerId : \\d+}")
-  public Customer getCustomerById(@PathParam("customerId") Long id) {
-    // URI : /customers/12345
-    // tag::adocskip3[]
-    System.out.println("getCustomerById : " + id);
-    return new Customer("John", "Smith", "jsmith@gmail.com", "1234565", LocalDate.now(), LocalDateTime.now());
-    // end::adocskip3[]
+  @Path("/{id}")
+  public Response getCustomer(@PathParam("id") UUID id) {
+    Customer customer = customers.stream()
+      .filter(a -> id.equals(a.getId()))
+      .findFirst()
+      .orElse(null);
+    return Response.ok(customer).build();
+  }
+
+  @GET
+  @Path("/count")
+  @Produces(MediaType.TEXT_PLAIN)
+  public Integer countCustomers() {
+    return customers.size();
+  }
+
+  @DELETE
+  @Path("/{id}")
+  public Response deleteCustomer(@PathParam("id") UUID id) {
+    customers.removeIf(x -> customers.contains(new Customer(id)));
+    return Response.noContent().build();
   }
 }
 // end::adocsnippet[]
