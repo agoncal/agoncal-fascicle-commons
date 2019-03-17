@@ -21,6 +21,8 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -99,6 +101,64 @@ public class CustomerResourceTest extends JerseyTest {
     assertThat(customers.getCustomers()).
         extracting(customer -> customer.getFirstName()).
         contains("John");
+  }
+
+  @Test
+  public void shouldGetCustomersRestAssured() {
+    Customer customer =
+    given().
+      baseUri("http://localhost:9998").
+    when().
+      get("/customers/1").
+    then().
+      statusCode(200).
+      extract().as(Customer.class);
+
+    assertThat(customer.getFirstName()).isEqualTo("John");
+  }
+
+  @Test
+  public void shouldGetCustomersRestAssuredJSon() {
+    given().
+      baseUri("http://localhost:9998").
+    when().
+      get("/customers/1").
+    then().
+      assertThat().
+      body(equalTo("{\"firstName\":\"John\",\"id\":1,\"lastName\":\"Lennon\"}"));
+  }
+
+  @Test
+  public void shouldGetCustomersRestAssuredJSonContains() {
+    given().
+      baseUri("http://localhost:9998").
+    when().
+      get("/customers/1").
+    then().
+      assertThat().
+      body(contains("John"));
+  }
+
+  @Test
+  public void shouldGetCustomersRestAssuredJSonContainsContentJSon() {
+    given().
+      baseUri("http://localhost:9998").
+      accept("application/json").
+    when().
+      get("/customers/1").
+    then().
+      statusCode(200);
+  }
+
+  @Test
+  public void shouldGetCustomersRestAssuredJSonContainsContentXML() {
+    given().
+      baseUri("http://localhost:9998").
+      accept("application/xml").
+    when().
+      get("/customers/1").
+    then().
+      statusCode(406);
   }
 
   @Test

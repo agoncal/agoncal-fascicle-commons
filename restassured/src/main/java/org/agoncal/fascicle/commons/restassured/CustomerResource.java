@@ -12,7 +12,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.Arrays;
-import java.util.UUID;
 
 /**
  * @author Antonio Goncalves
@@ -28,16 +27,16 @@ public class CustomerResource {
 
   static {
     customers.addAll(Arrays.asList(
-      new Customer(UUID.randomUUID(), "John", "Lennon"),
-      new Customer(UUID.randomUUID(), "Paul", "McCartney"),
-      new Customer(UUID.randomUUID(), "George", "Harrison"),
-      new Customer(UUID.randomUUID(), "Ringo", "Starr")
+      new Customer(1L, "John", "Lennon"),
+      new Customer(2L, "Paul", "McCartney"),
+      new Customer(3L, "George", "Harrison"),
+      new Customer(4L, "Ringo", "Starr")
     ));
   }
 
   @POST
   public Response createCustomer(@Context UriInfo uriInfo, Customer customer) {
-    customer.setId(UUID.randomUUID());
+    customer.setId((long) Math.random());
     customers.add(customer);
     URI uri = uriInfo.getAbsolutePathBuilder().path(customer.getId().toString()).build();
     return Response.created(uri).build();
@@ -50,7 +49,7 @@ public class CustomerResource {
 
   @GET
   @Path("/{id}")
-  public Response getCustomer(@PathParam("id") UUID id) {
+  public Response getCustomer(@PathParam("id") Long id) {
     Customer customer = customers.stream()
       .filter(a -> id.equals(a.getId()))
       .findFirst()
@@ -67,7 +66,7 @@ public class CustomerResource {
 
   @DELETE
   @Path("/{id}")
-  public Response deleteCustomer(@PathParam("id") UUID id) {
+  public Response deleteCustomer(@PathParam("id") Long id) {
     customers.removeIf(x -> customers.contains(new Customer(id)));
     return Response.noContent().build();
   }

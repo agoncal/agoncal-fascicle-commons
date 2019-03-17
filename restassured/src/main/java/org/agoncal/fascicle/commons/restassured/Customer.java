@@ -2,7 +2,6 @@ package org.agoncal.fascicle.commons.restassured;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * @author Antonio Goncalves
@@ -15,7 +14,7 @@ public class Customer {
   // =             Attributes             =
   // ======================================
 
-  private UUID id;
+  private Long id;
   private String firstName;
   private String lastName;
   private String email;
@@ -31,11 +30,11 @@ public class Customer {
   public Customer() {
   }
 
-  public Customer(UUID id) {
+  public Customer(Long id) {
     this.id = id;
   }
 
-  public Customer(UUID id, String firstName, String lastName) {
+  public Customer(Long id, String firstName, String lastName) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -54,11 +53,11 @@ public class Customer {
   // =          Getters & Setters         =
   // ======================================
 
-  public UUID getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(UUID id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
