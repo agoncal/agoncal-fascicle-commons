@@ -21,6 +21,7 @@ import java.util.UUID;
  */
 // tag::adocSnippet[]
 @Path("/customers")
+@Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
   private static Customers customers = new Customers();
