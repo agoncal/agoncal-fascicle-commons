@@ -35,7 +35,7 @@ public class CustomerResource {
   }
 
   @POST
-  public Response createArtist(@Context UriInfo uriInfo, Customer customer) {
+  public Response createCustomer(@Context UriInfo uriInfo, Customer customer) {
     customer.setId(UUID.randomUUID());
     customers.add(customer);
     URI uri = uriInfo.getAbsolutePathBuilder().path(customer.getId().toString()).build();

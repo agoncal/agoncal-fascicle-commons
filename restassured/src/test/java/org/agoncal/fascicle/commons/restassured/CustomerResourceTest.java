@@ -2,7 +2,9 @@ package org.agoncal.fascicle.commons.restassured;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Application;
@@ -21,6 +23,16 @@ public class CustomerResourceTest extends JerseyTest {
   @Override
   protected Application configure() {
     return new ResourceConfig(CustomerResource.class);
+  }
+
+  @BeforeEach
+  public void before() throws Exception {
+    super.setUp();
+  }
+
+  @AfterEach
+  public void after() throws Exception {
+    super.tearDown();
   }
 
 // tag::adocFixture[]
