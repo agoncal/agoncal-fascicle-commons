@@ -9,6 +9,7 @@
   <name>Commons</name>
 
   <modules>
+    <module>assertj</module>
     <module>junit</module>
     <module>restassured</module>
   </modules>
