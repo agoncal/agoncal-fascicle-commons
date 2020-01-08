@@ -70,7 +70,7 @@ public class CustomerResourceTest {
 
   @Test
   public void shouldGetACustomer() {
-    // tag::adocShouldListCustomersWithBaseAndHeader[]
+    // tag::adocShouldGetACustomer[]
     given()
       .baseUri("http://localhost:8080")
       .header(ACCEPT, APPLICATION_JSON)
@@ -79,7 +79,7 @@ public class CustomerResourceTest {
       .get("/customers/{id}").
     then()
       .statusCode(200);
-    // end::adocShouldListCustomersWithBaseAndHeader[]
+    // end::adocShouldGetACustomer[]
   }
 
   @Test @Disabled
