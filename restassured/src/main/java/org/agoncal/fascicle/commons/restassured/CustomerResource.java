@@ -27,13 +27,16 @@ public class CustomerResource {
 
   static {
     customers.addAll(Arrays.asList(
-      new Customer(1L, "John", "Lennon"),
-      new Customer(2L, "Paul", "McCartney"),
-      new Customer(3L, "George", "Harrison"),
-      new Customer(4L, "Ringo", "Starr")
+      new Customer().id(1L).firstName("John").lastName("Lennon"),
+      new Customer().id(2L).firstName("Paul").lastName("McCartney"),
+      new Customer().id(3L).firstName("George").lastName("Harrison"),
+      new Customer().id(4L).firstName("Ringo").lastName("Starr")
     ));
   }
 
+  /**
+   * curl -X POST -H "Content-Type: application/json" -d '{"first-name":"value1", "last-name":"value2"}' http://localhost:8080/customers -v
+   */
   @POST
   public Response createCustomer(@Context UriInfo uriInfo, Customer customer) {
     customer.setId((long) Math.random());
@@ -42,11 +45,19 @@ public class CustomerResource {
     return Response.created(uri).build();
   }
 
+  /**
+   * curl http://localhost:8080/customers
+   * curl -X GET -H "Accept: application/json" http://localhost:8080/customers
+   */
   @GET
   public Response getAllCustomers() {
     return Response.ok(customers).build();
   }
 
+  /**
+   * curl http://localhost:8080/customers/3
+   * curl -X GET -H "Accept: application/json" http://localhost:8080/customers/3
+   */
   @GET
   @Path("/{id}")
   public Response getCustomer(@PathParam("id") Long id) {
@@ -57,6 +68,10 @@ public class CustomerResource {
     return Response.ok(customer).build();
   }
 
+  /**
+   * curl  http://localhost:8080/customers/count
+   * curl -X GET -H "Accept: text/plain" http://localhost:8080/customers/count
+   */
   @GET
   @Path("/count")
   @Produces(MediaType.TEXT_PLAIN)
@@ -67,7 +82,7 @@ public class CustomerResource {
   @DELETE
   @Path("/{id}")
   public Response deleteCustomer(@PathParam("id") Long id) {
-    customers.removeIf(x -> customers.contains(new Customer(id)));
+    //customers.removeIf(x -> customers.contains(new Customer().id(id)));
     return Response.noContent().build();
   }
 }

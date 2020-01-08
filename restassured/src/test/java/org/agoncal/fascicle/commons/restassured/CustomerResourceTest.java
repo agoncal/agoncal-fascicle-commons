@@ -2,13 +2,17 @@ package org.agoncal.fascicle.commons.restassured;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+import static javax.ws.rs.core.HttpHeaders.ACCEPT;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Antonio Goncalves
@@ -20,93 +24,154 @@ import static org.hamcrest.Matchers.equalTo;
 public class CustomerResourceTest {
 
   @Test
-  public void shouldListAllCustomers() {
+  public void shouldListCustomers() {
+    // tag::adocShouldListCustomers[]
     given().
-      baseUri("http://localhost:9998").
-    when().
-      get("/customers").
-    then().
-      statusCode(200);
-//      content("customer", hasItem("John"));
+    when()
+      .get("/customers").
+    then()
+      .statusCode(200);
+    // end::adocShouldListCustomers[]
   }
 
   @Test
+  public void shouldListCustomersWithBase() {
+    given()
+      .baseUri("http://localhost:8080").
+    when()
+      .get("/customers").
+    then()
+      .statusCode(200);
+  }
+
+  @Test
+  public void shouldListCustomersWithBaseAndHeader() {
+    // tag::adocShouldListCustomersWithBaseAndHeader[]
+    given()
+      .baseUri("http://localhost:8080")
+      .header(ACCEPT, APPLICATION_JSON).
+    when()
+      .get("/customers").
+    then()
+      .statusCode(200);
+    // end::adocShouldListCustomersWithBaseAndHeader[]
+  }
+
+  @Test
+  public void shouldListCustomersWithBaseAndAcceptHeader() {
+    given()
+      .baseUri("http://localhost:8080")
+      .accept(APPLICATION_JSON).
+    when()
+      .get("/customers").
+    then()
+      .statusCode(200);
+  }
+
+  @Test
+  public void shouldGetACustomer() {
+    // tag::adocShouldListCustomersWithBaseAndHeader[]
+    given()
+      .baseUri("http://localhost:8080")
+      .header(ACCEPT, APPLICATION_JSON)
+      .pathParam("id", 1L).
+    when()
+      .get("/customers/{id}").
+    then()
+      .statusCode(200);
+    // end::adocShouldListCustomersWithBaseAndHeader[]
+  }
+
+  @Test @Disabled
   public void shouldGetCustomers() {
     Customer customer =
-    given().
-      baseUri("http://localhost:9998").
-    when().
-      get("/customers/1").
-    then().
-      statusCode(200).
-      extract().as(Customer.class);
+    given()
+      .accept(APPLICATION_JSON)
+      .pathParam("id", 1L).
+    when()
+      .get("/customers/{id}").
+    then()
+      .statusCode(200)
+      .extract().as(Customer.class);
 
-    //assertThat(customer.getFirstName()).isEqualTo("John");
+    Assertions.assertEquals("John",customer.getFirstName());
   }
 
   @Test
-  public void shouldGetCustomersJSon() {
-    given().
-      baseUri("http://localhost:9998").
-    when().
-      get("/customers/1").
-    then().
-      assertThat().
-      body(equalTo("{\"firstName\":\"John\",\"id\":1,\"lastName\":\"Lennon\"}"));
-  }
-
-  @Test
-  public void shouldGetCustomersJSonContains() {
-    given().
-      baseUri("http://localhost:9998").
-    when().
-      get("/customers/1").
-    then().
-      assertThat().
-      body(contains("John"));
-  }
-
-  @Test
-  public void shouldGetCustomersJSonContainsContentJSon() {
-    given().
-      baseUri("http://localhost:9998").
-      accept("application/json").
-    when().
-      get("/customers/1").
-    then().
-      statusCode(200);
+  public void shouldGetCustomersThen() {
+    // tag::shouldGetCustomersThen[]
+    given()
+      .pathParam("id", 1L).
+    when()
+      .get("/customers/{id}").
+    then()
+      .statusCode(200)
+      .contentType(APPLICATION_JSON)
+      .body("first-name", is("John"))
+      .body("last-name", is("Lennon"));
+    // end::shouldGetCustomersThen[]
   }
 
   @Test
   public void shouldGetCustomersJSonContainsContentXML() {
-    given().
-      baseUri("http://localhost:9998").
-      accept("application/xml").
-    when().
-      get("/customers/1").
-    then().
-      statusCode(406);
+    given()
+      .accept("application/xml").
+    when()
+      .get("/customers").
+    then()
+      .statusCode(406);
   }
 
   @Test
   public void shouldCountCustomers() {
     given().
-      baseUri("http://localhost:9998").
-    when().
-      get("/customers/count").
-    then().
-      statusCode(200);
+    when()
+      .get("/customers/count").
+    then()
+      .statusCode(200);
   }
 
   @Test
   public void shouldCountCustomersBody() {
     given().
-      baseUri("http://localhost:9998").
-    when().
-      get("/customers/count").
-    then().
-      statusCode(200).
-      body(containsString("4")).
-      contentType(ContentType.TEXT);
+    when()
+      .get("/customers/count").
+    then()
+      .statusCode(200)
+      .body(containsString("4"))
+      .contentType(ContentType.TEXT);
+  }
+
+  @Test
+  public void shouldCreateACustomer() {
+    // tag::shouldCreateACustomer[]
+    Customer customer = new Customer().firstName("John").lastName("Lennon");
+
+    given()
+      .body(customer)
+      .header(CONTENT_TYPE, APPLICATION_JSON)
+      .header(ACCEPT, APPLICATION_JSON).
+    when()
+      .post("/customers").
+    then()
+      .statusCode(201);
+    // end::shouldCreateACustomer[]
+  }
+
+  @Test
+  public void shouldCreateACustomerWithLocation() {
+    Customer customer = new Customer().firstName("John").lastName("Lennon");
+
+    String location =
+    given()
+      .body(customer)
+      .header(CONTENT_TYPE, APPLICATION_JSON)
+      .header(ACCEPT, APPLICATION_JSON).
+    when()
+      .post("/customers").
+    then()
+      .statusCode(201)
+      .extract().header("Location");
+    assertTrue(location.contains("/customers"));
   }
 }

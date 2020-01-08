@@ -1,5 +1,7 @@
 package org.agoncal.fascicle.commons.restassured;
 
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
  * http://www.antoniogoncalves.org
  * --
  */
+
 public class Customer {
 
   // ======================================
@@ -15,39 +18,18 @@ public class Customer {
   // ======================================
 
   private Long id;
+  @JsonbProperty("first-name")
   private String firstName;
+  @JsonbProperty("last-name")
   private String lastName;
   private String email;
+  @JsonbProperty("phone-number")
   private String phoneNumber;
+  @JsonbProperty("date-of-birth")
   private LocalDate dateOfBirth;
   private Integer age;
+  @JsonbTransient
   private LocalDateTime creationDate;
-
-  // ======================================
-  // =            Constructors            =
-  // ======================================
-
-  public Customer() {
-  }
-
-  public Customer(Long id) {
-    this.id = id;
-  }
-
-  public Customer(Long id, String firstName, String lastName) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
-
-  public Customer(String firstName, String lastName, String email, String phoneNumber, LocalDate dateOfBirth, LocalDateTime creationDate) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.phoneNumber = phoneNumber;
-    this.dateOfBirth = dateOfBirth;
-    this.creationDate = creationDate;
-  }
 
   // ======================================
   // =          Getters & Setters         =
@@ -61,12 +43,22 @@ public class Customer {
     this.id = id;
   }
 
+  public Customer id(Long id) {
+    this.id = id;
+    return this;
+  }
+
   public String getFirstName() {
     return firstName;
   }
 
   public void setFirstName(String firstName) {
     this.firstName = firstName;
+  }
+
+  public Customer firstName(String firstName) {
+    this.firstName = firstName;
+    return this;
   }
 
   public String getLastName() {
@@ -77,12 +69,22 @@ public class Customer {
     this.lastName = lastName;
   }
 
+  public Customer lastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
   public String getEmail() {
     return email;
   }
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public Customer email(String email) {
+    this.email = email;
+    return this;
   }
 
   public String getPhoneNumber() {
@@ -93,12 +95,22 @@ public class Customer {
     this.phoneNumber = phoneNumber;
   }
 
+  public Customer phoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+    return this;
+  }
+
   public LocalDate getDateOfBirth() {
     return dateOfBirth;
   }
 
   public void setDateOfBirth(LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
+  }
+
+  public Customer dateOfBirth(LocalDate dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+    return this;
   }
 
   public Integer getAge() {
@@ -109,12 +121,22 @@ public class Customer {
     this.age = age;
   }
 
+  public Customer age(Integer age) {
+    this.age = age;
+    return this;
+  }
+
   public LocalDateTime getCreationDate() {
     return creationDate;
   }
 
   public void setCreationDate(LocalDateTime creationDate) {
     this.creationDate = creationDate;
+  }
+
+  public Customer creationDate(LocalDateTime creationDate) {
+    this.creationDate = creationDate;
+    return this;
   }
 
   // ======================================

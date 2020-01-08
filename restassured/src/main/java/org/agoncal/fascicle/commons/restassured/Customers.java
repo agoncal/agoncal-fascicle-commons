@@ -11,15 +11,12 @@ import java.util.List;
  *         http://www.antoniogoncalves.org
  *         --
  */
-@XmlRootElement
-@XmlSeeAlso(Customer.class)
 public class Customers extends ArrayList<Customer> {
 
   // ======================================
   // =          Getters & Setters         =
   // ======================================
 
-  @XmlElement(name = "customer")
   public List<Customer> getCustomers() {
     return this;
   }
