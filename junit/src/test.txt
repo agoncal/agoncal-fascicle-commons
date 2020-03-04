@@ -4,13 +4,13 @@
 [INFO]
 [INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile)
 [INFO]
-[INFO] --- maven-surefire-plugin:2.22.1:test (default-test)
+[INFO] --- maven-surefire-plugin:2.22.2:test (default-test)
 [INFO]
 [INFO] ----------
 [INFO]  T E S T S
 [INFO] ----------
 [INFO] Running org.agoncal.fascicle.commons.junit.CustomerTest
-[WARNING] Tests run: 3, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.047 s
+[WARNING] Tests run: 3, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.032 s
 [INFO]
 [INFO] Results:
 [INFO]
@@ -19,7 +19,6 @@
 [INFO] -------------
 [INFO] BUILD SUCCESS
 [INFO] -------------
-[INFO] Total time: 4.284 s
-[INFO] Finished at: 2019-02-27T10:45:37+01:00
-[INFO] Final Memory: 16M/166M
+[INFO] Total time:  1.824 s
+[INFO] Finished at: 2020-03-04T11:51:34+01:00
 [INFO] -------------
