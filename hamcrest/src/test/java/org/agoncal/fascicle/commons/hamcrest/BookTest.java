@@ -2,7 +2,7 @@ package org.agoncal.fascicle.commons.hamcrest;
 
 import org.junit.jupiter.api.Test;
 
-
+// @formatter:off
 // tag::adocSnippet[]
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -16,4 +16,4 @@ class BookTest {
     assertThat(oneBook, equalTo(anotherBook));
   }
 }
-// tag::adocSnippet[]
+// end::adocSnippet[]
