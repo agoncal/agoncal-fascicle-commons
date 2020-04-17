@@ -37,7 +37,7 @@ public class CustomerResourceTest {
   @Test
   public void shouldListCustomersWithBase() {
     given()
-      .baseUri("http://localhost:8080").
+      .baseUri("http://localhost:8081").
     when()
       .get("/customers").
     then()
@@ -48,7 +48,7 @@ public class CustomerResourceTest {
   public void shouldListCustomersWithBaseAndHeader() {
     // tag::adocShouldListCustomersWithBaseAndHeader[]
     given()
-      .baseUri("http://localhost:8080")
+      .baseUri("http://localhost:8081")
       .header(ACCEPT, APPLICATION_JSON).
     when()
       .get("/customers").
@@ -60,7 +60,7 @@ public class CustomerResourceTest {
   @Test
   public void shouldListCustomersWithBaseAndAcceptHeader() {
     given()
-      .baseUri("http://localhost:8080")
+      .baseUri("http://localhost:8081")
       .accept(APPLICATION_JSON).
     when()
       .get("/customers").
@@ -72,7 +72,7 @@ public class CustomerResourceTest {
   public void shouldGetACustomer() {
     // tag::adocShouldGetACustomer[]
     given()
-      .baseUri("http://localhost:8080")
+      .baseUri("http://localhost:8081")
       .header(ACCEPT, APPLICATION_JSON)
       .pathParam("id", 1L).
     when()
