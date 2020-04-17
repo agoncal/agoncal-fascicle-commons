@@ -10,6 +10,7 @@
 
   <modules>
     <module>assertj</module>
+    <module>hamcrest</module>
     <module>junit</module>
     <module>restassured</module>
   </modules>
