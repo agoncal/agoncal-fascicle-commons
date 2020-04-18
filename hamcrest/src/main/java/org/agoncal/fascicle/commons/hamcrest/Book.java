@@ -22,9 +22,10 @@ public class Book {
     this.title = title;
   }
 
-  public Book(String title, Integer yearOfPublication) {
+  public Book(String title, Integer yearOfPublication, Integer nbOfPages) {
     this.title = title;
     this.yearOfPublication = yearOfPublication;
+    this.nbOfPages = nbOfPages;
   }
 
   public String getTitle() {
