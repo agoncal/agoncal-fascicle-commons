@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
 class BookAssertionsTest {
@@ -29,6 +30,7 @@ class BookAssertionsTest {
     assertThat(book.getTitle(), is(equalTo("H2G2")));
     assertThat(book.getYearOfPublication(), is(equalTo(1979)));
     assertThat(book, is(anotherBook));
+    assertThat(book.getTitle(), is(not(nullValue())));
     assertThat(book.getIsbn10(), is(nullValue()));
     assertThat(book.getNbOfPages(), is(greaterThan(100)));
     // end::adocAssertThatIs[]
