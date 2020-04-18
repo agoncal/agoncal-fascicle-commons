@@ -31,6 +31,6 @@ class BookAssertionsTest {
     assertThat(book, is(anotherBook));
     assertThat(book.getIsbn10(), is(nullValue()));
     assertThat(book.getNbOfPages(), is(greaterThan(100)));
-    // end::adocAssertThat[]
+    // end::adocAssertThatIs[]
   }
 }
