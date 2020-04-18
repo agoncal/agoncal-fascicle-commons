@@ -13,6 +13,7 @@
     <module>hamcrest</module>
     <module>junit</module>
     <module>restassured</module>
+    <module>testcontainers</module>
   </modules>
 
 </project>
