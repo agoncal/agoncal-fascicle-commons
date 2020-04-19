@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PingPostgreSQLTest {
 
   @Container
-  public PostgreSQLContainer postgreSQL = new PostgreSQLContainer<>("postgres:12.1")
+  public PostgreSQLContainer postgreSQL = new PostgreSQLContainer<>("postgres:12.2")
     .withDatabaseName("books_database")
     .withUsername("book")
     .withPassword("book")
@@ -31,6 +31,8 @@ public class PingPostgreSQLTest {
 
       if (rs.next()) {
         assertTrue(rs.getString(1).contains("PostgreSQL 12"));
+      } else {
+        throw new Exception();
       }
     }
 
