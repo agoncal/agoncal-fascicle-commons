@@ -3,6 +3,7 @@ package org.agoncal.fascicle.commons.testcontainers;
 import org.junit.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,10 +13,11 @@ import java.sql.Statement;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // tag::adocSnippet[]
+@Testcontainers
 public class PingPostgreSQLTest {
 
   @Container
-  public PostgreSQLContainer postgreSQL = new PostgreSQLContainer<>("postgres:12.2")
+  public static PostgreSQLContainer postgreSQL = new PostgreSQLContainer<>("postgres:12.2")
     .withDatabaseName("books_database")
     .withUsername("book")
     .withPassword("book")
