@@ -18,9 +18,9 @@ public class PingPostgreSQLTest {
 
   @Container
   public static PostgreSQLContainer pg = new PostgreSQLContainer<>("postgres:12.4")
-    .withDatabaseName("books_database")
-    .withUsername("book")
-    .withPassword("book")
+    .withDatabaseName("vintageStoreDB")
+    .withUsername("vintage")
+    .withPassword("vintage")
     .withExposedPorts(5432);
 
   @Test
