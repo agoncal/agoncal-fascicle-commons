@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PingPostgreSQLTest {
 
   @Container
-  public static PostgreSQLContainer postgreSQL = new PostgreSQLContainer<>("postgres:12.2")
+  public static PostgreSQLContainer pg = new PostgreSQLContainer<>("postgres:12.4")
     .withDatabaseName("books_database")
     .withUsername("book")
     .withPassword("book")
@@ -25,9 +25,9 @@ public class PingPostgreSQLTest {
 
   @Test
   public void shouldPingPostgreSQL() throws Exception {
-    postgreSQL.start();
+    pg.start();
 
-    try (Connection con = DriverManager.getConnection(postgreSQL.getJdbcUrl(), postgreSQL.getUsername(), postgreSQL.getPassword());
+    try (Connection con = DriverManager.getConnection(pg.getJdbcUrl(), pg.getUsername(), pg.getPassword());
          Statement st = con.createStatement();
          ResultSet rs = st.executeQuery("SELECT VERSION()")) {
 
@@ -38,7 +38,7 @@ public class PingPostgreSQLTest {
       }
     }
 
-    postgreSQL.stop();
+    pg.stop();
   }
 }
 // end::adocSnippet[]
