@@ -2,16 +2,19 @@ package org.agoncal.fascicle.commons.restassured;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.Assertions;
+import io.restassured.mapper.ObjectMapperType;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static javax.ws.rs.core.HttpHeaders.ACCEPT;
-import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
+import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -27,9 +30,9 @@ public class CustomerResourceTest {
   public void shouldListCustomers() {
     // tag::adocShouldListCustomers[]
     given().
-    when()
+      when()
       .get("/customers").
-    then()
+      then()
       .statusCode(200);
     // end::adocShouldListCustomers[]
   }
@@ -38,9 +41,9 @@ public class CustomerResourceTest {
   public void shouldListCustomersWithBase() {
     given()
       .baseUri("http://localhost:8081").
-    when()
+      when()
       .get("/customers").
-    then()
+      then()
       .statusCode(200);
   }
 
@@ -50,9 +53,9 @@ public class CustomerResourceTest {
     given()
       .baseUri("http://localhost:8081")
       .header(ACCEPT, APPLICATION_JSON).
-    when()
+      when()
       .get("/customers").
-    then()
+      then()
       .statusCode(200);
     // end::adocShouldListCustomersWithBaseAndHeader[]
   }
@@ -62,9 +65,9 @@ public class CustomerResourceTest {
     given()
       .baseUri("http://localhost:8081")
       .accept(APPLICATION_JSON).
-    when()
+      when()
       .get("/customers").
-    then()
+      then()
       .statusCode(200);
   }
 
@@ -75,103 +78,137 @@ public class CustomerResourceTest {
       .baseUri("http://localhost:8081")
       .header(ACCEPT, APPLICATION_JSON)
       .pathParam("id", 1L).
-    when()
+      when()
       .get("/customers/{id}").
-    then()
+      then()
       .statusCode(200);
     // end::adocShouldGetACustomer[]
   }
 
-  @Test @Disabled
+  @Test
+  public void shouldExtractACustomer() {
+    // tag::adocShouldExtractACustomer[]
+    Customer customer =
+      given()
+        .accept(APPLICATION_JSON)
+        .pathParam("id", 1L).
+        when()
+        .get("/customers/{id}").
+        then()
+        .statusCode(200)
+        .extract().as(Customer.class);
+
+    assertEquals("John", customer.getFirstName());
+    // end::adocShouldExtractACustomer[]
+  }
+
+  @Test
+  @Disabled
   public void shouldGetCustomers() {
     Customer customer =
-    given()
-      .accept(APPLICATION_JSON)
-      .pathParam("id", 1L).
-    when()
-      .get("/customers/{id}").
-    then()
-      .statusCode(200)
-      .extract().as(Customer.class);
+      given()
+        .accept(APPLICATION_JSON)
+        .pathParam("id", 1L).
+        when()
+        .get("/customers/{id}").
+        then()
+        .statusCode(200)
+        .extract().as(Customer.class);
 
-    Assertions.assertEquals("John",customer.getFirstName());
+    assertEquals("John", customer.getFirstName());
   }
 
   @Test
   public void shouldGetCustomersThen() {
-    // tag::shouldGetCustomersThen[]
+    // tag::adocShouldGetCustomersThen[]
     given()
       .pathParam("id", 1L).
-    when()
+      when()
       .get("/customers/{id}").
-    then()
+      then()
       .statusCode(200)
       .contentType(APPLICATION_JSON)
+      .body("$", hasKey("id"))
       .body("first-name", is("John"))
-      .body("last-name", is("Lennon"));
-    // end::shouldGetCustomersThen[]
+      .body("last-name", startsWith("Lennon"));
+    // end::adocShouldGetCustomersThen[]
   }
 
   @Test
   public void shouldGetCustomersJSonContainsContentXML() {
     given()
       .accept("application/xml").
-    when()
+      when()
       .get("/customers").
-    then()
+      then()
       .statusCode(406);
   }
 
   @Test
   public void shouldCountCustomers() {
     given().
-    when()
+      when()
       .get("/customers/count").
-    then()
+      then()
       .statusCode(200);
   }
 
   @Test
   public void shouldCountCustomersBody() {
     given().
-    when()
+      when()
       .get("/customers/count").
-    then()
+      then()
       .statusCode(200)
       .body(containsString("4"))
       .contentType(ContentType.TEXT);
   }
 
   @Test
-  public void shouldCreateACustomer() {
-    // tag::shouldCreateACustomer[]
-    Customer customer = new Customer().firstName("John").lastName("Lennon");
-
+  public void shouldDeleteCustomer() {
+    // tag::adocShouldDeleteCustomer[]
     given()
-      .body(customer)
-      .header(CONTENT_TYPE, APPLICATION_JSON)
-      .header(ACCEPT, APPLICATION_JSON).
-    when()
-      .post("/customers").
-    then()
-      .statusCode(201);
-    // end::shouldCreateACustomer[]
+      .pathParam("id", 1L).
+      when()
+      .delete("/customers/{id}").
+      then()
+      .statusCode(204);
+    // end::adocShouldDeleteCustomer[]
   }
 
   @Test
-  public void shouldCreateACustomerWithLocation() {
+  public void shouldCreateACustomer() {
+    // tag::adocShouldCreateACustomer[]
     Customer customer = new Customer().firstName("John").lastName("Lennon");
 
-    String location =
     given()
-      .body(customer)
+      .body(customer, ObjectMapperType.JSONB)
       .header(CONTENT_TYPE, APPLICATION_JSON)
       .header(ACCEPT, APPLICATION_JSON).
-    when()
+      when()
       .post("/customers").
-    then()
-      .statusCode(201)
-      .extract().header("Location");
+      then()
+      .statusCode(201);
+    // end::adocShouldCreateACustomer[]
+  }
+
+  @Test
+  public void shouldCreateACustomerAndExtractLocation() {
+    Customer customer = new Customer().firstName("John").lastName("Lennon");
+
+    // tag::adocShouldCreateACustomerAndExtractLocation[]
+    String location =
+      given()
+        .body(customer, ObjectMapperType.JSONB)
+        .header(CONTENT_TYPE, APPLICATION_JSON)
+        .header(ACCEPT, APPLICATION_JSON).
+        when()
+        .post("/customers").
+        then()
+        .statusCode(201)
+        .extract().header("Location");
+
     assertTrue(location.contains("/customers"));
+    // end::adocShouldCreateACustomerAndExtractLocation[]
   }
 }
