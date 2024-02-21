@@ -14,7 +14,7 @@
     <version.junit>5.9.1</version.junit>
     <version.java>11</version.java>
     <version.slf4j>2.0.5</version.slf4j>
-    <version.postgres>42.5.1</version.postgres>
+    <version.postgres>42.7.2</version.postgres>
     <maven.compiler.source>${version.java}</maven.compiler.source>
     <maven.compiler.target>${version.java}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
