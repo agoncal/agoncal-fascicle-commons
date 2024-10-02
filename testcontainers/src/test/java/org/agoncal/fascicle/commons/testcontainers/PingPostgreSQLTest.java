@@ -1,6 +1,7 @@
 package org.agoncal.fascicle.commons.testcontainers;
 
 import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -10,14 +11,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 // tag::adocSnippet[]
 @Testcontainers
 public class PingPostgreSQLTest {
 
   @Container
-  public static PostgreSQLContainer pg = new PostgreSQLContainer<>("postgres:12.4")
+  public static PostgreSQLContainer pg = new PostgreSQLContainer<>("postgres:16.4-bullseye")
     .withDatabaseName("vintageStoreDB")
     .withUsername("vintage")
     .withPassword("vintage")
@@ -32,7 +31,7 @@ public class PingPostgreSQLTest {
          ResultSet rs = st.executeQuery("SELECT VERSION()")) {
 
       if (rs.next()) {
-        assertTrue(rs.getString(1).contains("PostgreSQL 12"));
+        assertTrue(rs.getString(1).contains("PostgreSQL 16"));
       } else {
         throw new Exception();
       }

@@ -9,14 +9,14 @@
   <name>Commons :: TestContainers</name>
 
   <properties>
-    <!-- JAX-RS -->
-    <version.testcontainers>1.17.6</version.testcontainers>
-    <version.junit>5.9.1</version.junit>
-    <version.java>11</version.java>
-    <version.slf4j>2.0.5</version.slf4j>
-    <version.postgres>42.5.1</version.postgres>
-    <maven.compiler.source>${version.java}</maven.compiler.source>
-    <maven.compiler.target>${version.java}</maven.compiler.target>
+    <!-- Java -->
+    <maven.compiler.release>17</maven.compiler.release>
+    <!-- Test -->
+    <version.testcontainers>1.20.2</version.testcontainers>
+    <version.junit>5.11.1</version.junit>
+    <version.slf4j>2.0.16</version.slf4j>
+    <version.postgres>42.7.4</version.postgres>
+    <!-- Project -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -36,34 +36,19 @@
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${version.junit}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
+      <artifactId>junit-jupiter</artifactId>
       <version>${version.testcontainers}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
-      <version>${version.testcontainers}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
       <version>${version.testcontainers}</version>
       <scope>test</scope>
     </dependency>
