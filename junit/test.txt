@@ -2,9 +2,9 @@
 [INFO] Building Commons :: JUnit
 [INFO] -------------------------
 [INFO]
-[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile)
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile)
 [INFO]
-[INFO] --- maven-surefire-plugin:2.22.2:test (default-test)
+[INFO] --- maven-surefire-plugin:3.5.0:test (default-test)
 [INFO]
 [INFO] ----------
 [INFO]  T E S T S
@@ -20,5 +20,5 @@
 [INFO] BUILD SUCCESS
 [INFO] -------------
 [INFO] Total time:  1.824 s
-[INFO] Finished at: 2020-03-04T11:51:34+01:00
+[INFO] Finished at: 2024-10-03T11:51:34+01:00
 [INFO] -------------
